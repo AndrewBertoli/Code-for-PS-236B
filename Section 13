@@ -25,18 +25,24 @@ Facebook.In.Class=rbern(1100,(100-Midterm.Grade)/100)
 Sharp.Dresser=rbern(1100,0.1*Midterm.Grade/100)
 Questions.In.Lecture=rbern(1100,0.3*Midterm.Grade/100)
 
-Score=0.10*Midterm.Grade+0.5*Paper.Grade.1+0.15*Paper.Grade.2+0.01*Participation.Grade*Paper.Grade.2+0.01*Homework.Average*Attendance+5*Year.Of.College+3*Extra.Credit+10*Appearance.in.Office.Hours+5*Poli.Sci.Major-5*Double.Major-5*Athlete+10*Sits.In.Front-5*Hat.In.Class-5*Texts.In.Class-5*Facebook.In.Class+0.1*Sharp.Dresser+5*Questions.In.Lecture+rnorm(1100,0,25)
+Score=0.10*Midterm.Grade+0.5*Paper.Grade.1+0.15*Paper.Grade.2+0.01*Participation.Grade*Paper.Grade.2+0.01*Homework.Average*
+Attendance+5*Year.Of.College+3*Extra.Credit+10*Appearance.in.Office.Hours+5*Poli.Sci.Major-5*Double.Major-5*Athlete+10*
+Sits.In.Front-5*Hat.In.Class-5*Texts.In.Class-5*Facebook.In.Class+0.1*Sharp.Dresser+5*Questions.In.Lecture+rnorm(1100,0,25)
 
 Final.Grade=Score/max(Score)*100
 
-data=data.frame(Midterm.Grade, Paper.Grade.1, Paper.Grade.2, Participation.Grade, Homework.Average, Gender, Attendance, Year.Of.College, Presentation, Extra.Credit, Appearance.in.Office.Hours, Poli.Sci.Major, Double.Major, Athlete, Sits.In.Front, Hat.In.Class, Texts.In.Class, Facebook.In.Class, Sharp.Dresser, Questions.In.Lecture, Final.Grade)
+data=data.frame(Midterm.Grade, Paper.Grade.1, Paper.Grade.2, Participation.Grade, Homework.Average, Gender, Attendance, 
+Year.Of.College, Presentation, Extra.Credit, Appearance.in.Office.Hours, Poli.Sci.Major, Double.Major, Athlete, 
+Sits.In.Front, Hat.In.Class, Texts.In.Class, Facebook.In.Class, Sharp.Dresser, Questions.In.Lecture, Final.Grade)
 
 Last.Year=data[1:100,]
 This.Year=data[101:1100,]
 
 # So for OLS with all the predictors
 
-model=lm(Final.Grade ~ Midterm.Grade + Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average + Gender + Attendance + Year.Of.College + Presentation + Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major + Double.Major + Athlete + Sits.In.Front + Hat.In.Class + Texts.In.Class + Facebook.In.Class + Sharp.Dresser + Questions.In.Lecture, Last.Year)
+model=lm(Final.Grade ~ Midterm.Grade + Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average + Gender + 
+Attendance + Year.Of.College + Presentation + Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major + Double.Major +
+Athlete + Sits.In.Front + Hat.In.Class + Texts.In.Class + Facebook.In.Class + Sharp.Dresser + Questions.In.Lecture, Last.Year)
 
 predictions=predict(model,This.Year[,1:20])
 
@@ -82,7 +88,10 @@ MSE
 
 require(ridge)
 
-model=linearRidge(Final.Grade ~ Midterm.Grade + Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average + Gender + Attendance + Year.Of.College + Presentation + Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major + Double.Major + Athlete + Sits.In.Front + Hat.In.Class + Texts.In.Class + Facebook.In.Class + Sharp.Dresser + Questions.In.Lecture, Last.Year, lambda="automatic")
+model=linearRidge(Final.Grade ~ Midterm.Grade + Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average 
++ Gender + Attendance + Year.Of.College + Presentation + Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major 
++ Double.Major + Athlete + Sits.In.Front + Hat.In.Class + Texts.In.Class + Facebook.In.Class + Sharp.Dresser 
++ Questions.In.Lecture, Last.Year, lambda="automatic")
 
 predictions=predict(model,This.Year[,1:20])
 
@@ -111,7 +120,9 @@ MSE
 
 # Now to use OLS with the variables selected by LASSO
 
-model=lm(Final.Grade ~ Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average + Gender + Year.Of.College + Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major + Double.Major + Athlete + Sits.In.Front + Hat.In.Class + Facebook.In.Class + Sharp.Dresser + Questions.In.Lecture, Last.Year)
+model=lm(Final.Grade ~ Paper.Grade.1 + Paper.Grade.2 + Participation.Grade + Homework.Average + Gender + Year.Of.College 
++ Extra.Credit + Appearance.in.Office.Hours + Poli.Sci.Major + Double.Major + Athlete + Sits.In.Front + Hat.In.Class 
++ Facebook.In.Class + Sharp.Dresser + Questions.In.Lecture, Last.Year)
 
 predictions=predict(model,This.Year[,1:20])
 
