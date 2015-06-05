@@ -33,7 +33,9 @@ data=data.frame(Class,Student,Yit,Yic)
 DifInMeans=function(T,C){
 return(mean(T)-mean(C))}	
 
-# In the following function, N is the total number of units, M is the number of clusters, mt is the number of clusters to be assigned to treatment, nj.t is a vector containing the number of units in each treated cluster, and nj.c is the number of units in each control cluster. 
+# In the following function, N is the total number of units, M is the number of clusters, mt is the number of clusters 
+# to be assigned to treatment, nj.t is a vector containing the number of units in each treated cluster, and nj.c is the 
+# number of units in each control cluster. 
 
 DesRajEstimator=function(T,C,N,M,mt,nj.t,nj.c,k){ 
 mc=M-mt
