@@ -1,4 +1,15 @@
-# The following function will compute the p-values for different Gamma levels for matched (m) and unmatched (um) data. The argument "Gamma" is the Gamma level, defined as the maximum difference in treatment odds between any two units in the sample. In general, setting Gamma=j will return the same p-value as Gamma=1/j. When "Type" is set at "mean", the function will do a permutation test with the mean as the test statistic. When "Type" is set at "rank", the function will do the Wilcoxon Signed-Rank Test or Rank Sum Tests, which are less sensitive to outliers. The p-values are two-tailed and computed using Monte Carlo simulation, so the function will take some time to run. This method differs from the functions in the "rbound" package, which rely on the normal approximation and do not allow the user to use the mean as the test statistic. Remember to interpret the test results correctly. In the example where we tested if the going to the beach had a beneficial effect on health, if the results held for Gamma=4, the correct interpretation would be, "The results would hold if within each pair the healthier person was four times as likely to go to the beach as the less healthy person." For the unmatched function, the interpretation would be, "The results would hold if no person was more than four times as likely than other person to go to the beach."
+# The following function will compute the p-values for different Gamma levels for matched (m) and unmatched (um) data. 
+# The argument "Gamma" is the Gamma level, defined as the maximum difference in treatment odds between any two units in 
+# the sample. In general, setting Gamma=j will return the same p-value as Gamma=1/j. When "Type" is set at "mean", the 
+# function will do a permutation test with the mean as the test statistic. When "Type" is set at "rank", the function will 
+# do the Wilcoxon Signed-Rank Test or Rank Sum Tests, which are less sensitive to outliers. The p-values are two-tailed and 
+# computed using Monte Carlo simulation, so the function will take some time to run. This method differs from the functions in 
+# the "rbound" package, which rely on the normal approximation and do not allow the user to use the mean as the test statistic. 
+# Remember to interpret the test results correctly. In the example where we tested if the going to the beach had a beneficial 
+# effect on health, if the results held for Gamma=4, the correct interpretation would be, "The results would hold if within 
+# each pair the healthier person was four times as likely to go to the beach as the less healthy person." For the unmatched 
+# function, the interpretation would be, "The results would hold if no person was more than four times as likely than other 
+# person to go to the beach."
 
 require(Rlab)
 
@@ -72,7 +83,8 @@ if(length(p.vals)<=50) candidate.ks=1:length(outcomes)
 for(k in 1:length(candidate.ks)){
 fake.t.stats=rep(0,2000)
 for(i in 1:2000){
-treatment.assignment=rbern(length(outcomes),c(rep(Gamma/(Gamma+1),candidate.ks[k]),rep(1/(Gamma+1),length(outcomes)-candidate.ks[k])))
+treatment.assignment=rbern(length(outcomes),c(rep(Gamma/(Gamma+1),candidate.ks[k]),rep(1/(Gamma+1),length(outcomes)-
+candidate.ks[k])))
 fake.t.stats[i]=mean(outcomes[treatment.assignment==1])-mean(outcomes[treatment.assignment==0])
 }
 p.vals[k]=length(which(abs(fake.t.stats)>=abs(real.t.stat)))/length(fake.t.stats)}
@@ -82,7 +94,8 @@ p.vals=rep(0,10)
 for(k in 1:10){
 fake.t.stats=rep(0,20000)
 for(i in 1:20000){
-treatment.assignment=rbern(length(outcomes),c(rep(Gamma/(Gamma+1),candidate.ks[k]),rep(1/(Gamma+1),length(outcomes)-candidate.ks[k])))
+treatment.assignment=rbern(length(outcomes),c(rep(Gamma/(Gamma+1),candidate.ks[k]),rep(1/(Gamma+1),length(outcomes)-
+candidate.ks[k])))
 fake.t.stats[i]=mean(outcomes[treatment.assignment==1])-mean(outcomes[treatment.assignment==0])
 }
 p.vals[k]=length(which(abs(fake.t.stats)>=abs(real.t.stat)))/length(fake.t.stats)}
@@ -98,7 +111,8 @@ return(signif(p.value,2))}
 if(Type=="Rank"){
 
 ranks=rank(c(Treat.Outcomes,Control.Outcomes))
-real.t.stat=mean(ranks[1:length(Treat.Outcomes)])-mean(ranks[(length(Treat.Outcomes)+ 1):length(c(Treat.Outcomes,Control.Outcomes))])
+real.t.stat=mean(ranks[1:length(Treat.Outcomes)])-mean(ranks[(length(Treat.Outcomes)+ 1):length(c(Treat.Outcomes,
+Control.Outcomes))])
 ranks=ranks[order(ranks)]
 
 
