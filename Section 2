@@ -1,6 +1,7 @@
 # Section 2 Code
 
-data=data.frame(c(1:12),c("Black","Brown","Black","Polar","Polar","Brown","Black","Black","Polar","Brown","Brown","Polar"),c(0,1,0,0,1,1,0,1,1,0,0,1),c(22,10,27,26,13,14,33,16,10,25,26,12))
+data=data.frame(c(1:12),c("Black","Brown","Black","Polar","Polar","Brown","Black","Black","Polar",
+"Brown","Brown","Polar"),c(0,1,0,0,1,1,0,1,1,0,0,1),c(22,10,27,26,13,14,33,16,10,25,26,12))
 
 colnames(data)=c("Bear","Type","Treat","CampSiteRaids")
 
