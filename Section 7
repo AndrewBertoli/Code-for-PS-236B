@@ -5,7 +5,10 @@ library(ggplot2)
 
 # Dealing with a binary outcome
 
-# Let's say we have 1000 students in a class. We randomly give 500 of them unlimited free coffee from Starbucks. The outcome of interest is whether students pass the class. There is a constant treatment effect, where everyone has a 10% increase in their chance of passing the class if they get the free Starbucks. People's probability of passing will be determined by the following function.
+# Let's say we have 1000 students in a class. We randomly give 500 of them unlimited free coffee from Starbucks. 
+# The outcome of interest is whether students pass the class. There is a constant treatment effect, where everyone
+# has a 10% increase in their chance of passing the class if they get the free Starbucks. People's probability of 
+# passing will be determined by the following function.
 
 Age=runif(100,25,30)
 
@@ -23,7 +26,9 @@ data=data.frame(Pass,Treat,Age,IQ,Prob.Of.Passing)
 
 t.test(data[Treat==1,]$Pass,data[Treat==0,]$Pass)
 
-# However, let's say that we want to control for age and noise as a robustness check. We will pretend here that we have measurements of both of these covariates with no noise. Since we don't have any interactions, we won't include them in this model, although we normally should. So our model is
+# However, let's say that we want to control for age and noise as a robustness check. We will pretend here that 
+# we have measurements of both of these covariates with no noise. Since we don't have any interactions, we won't 
+# include them in this model, although we normally should. So our model is
 
 model=lm(Pass~Treat+Age+IQ,data)
 
@@ -35,7 +40,8 @@ model=lm(Prob.Of.Passing~Treat+Age+IQ,data)
 
 summary(model)
 
-# But unfortunately we don't observe the underlying probabilies. We just see who passes and doesn't pass. So let's go back to this model.
+# But unfortunately we don't observe the underlying probabilies. We just see who passes and doesn't pass. So let's go 
+# back to this model.
 
 # So some of our predicted probabilities fall outside [0,1], which is a concern (you may need to rerun the code to see this)
 
@@ -283,9 +289,12 @@ sum(Logit.P.Vals<0.05)/length(Logit.P.Vals)
 Ests=data.frame(Estimate=c(LPM.Estimates,Probit.Estimates,Logit.Estimates))
 Ests$Method=c(rep("LPM",1000),rep("Probit",1000),rep("Logit",1000))
 
-ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=0, lty=2) + annotate("text", x=-0.005, y=3, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") + labs(title="Comparing LPM, Probit, and Logit")
+ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=0, lty=2) + 
+annotate("text", x=-0.005, y=3, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") 
++ labs(title="Comparing LPM, Probit, and Logit")
 
-# Now let's see what happens when we add fixed effects. For these simulations, we will fix the treatment effect at 0 and that the fixed effects are all 0.
+# Now let's see what happens when we add fixed effects. For these simulations, we will fix the treatment effect 
+# at 0 and that the fixed effects are all 0.
 
 
 # Probit with no treatment effect
@@ -296,11 +305,18 @@ LPM.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),
+rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));
+C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));
+C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),
+rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));
+C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),
+rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
 model=lm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,data)
 LPM.Estimates[i]=summary(model)$coefficients[2,1]
 LPM.P.Vals[i]=summary(model)$coefficients[2,4]
@@ -323,15 +339,25 @@ Probit.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));
+C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),
+rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));
+C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),
+rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));
+C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),
+rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
-model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,family=binomial(link="probit"),data)
-variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
+model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,
+family=binomial(link="probit"),data)
+variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12",
+"C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
 variables.T0=as.data.frame(variables.T0)
-colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")
+colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14",
+"C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")
 variables.T0[1]=0
 variables.T1=variables.T0
 variables.T1[1]=1
@@ -360,15 +386,25 @@ Logit.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));
+C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),
+rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));
+C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),
+rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));
+C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),
+rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
-model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,family=binomial(link="logit"),data)
-variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
+model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,
+family=binomial(link="logit"),data)
+variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12",
+"C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
 variables.T0=as.data.frame(variables.T0)
-colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")
+colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15",
+"C16","C17","C18","C19","C20","C21","C22","C23","C24")
 variables.T0[1]=0
 variables.T1=variables.T0
 variables.T1[1]=1
@@ -398,11 +434,18 @@ LPM.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));
+C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),
+rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));
+C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),
+rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));
+C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),
+rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0.1*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
 model=lm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,data)
 LPM.Estimates[i]=summary(model)$coefficients[2,1]
 LPM.P.Vals[i]=summary(model)$coefficients[2,4]
@@ -425,15 +468,25 @@ Probit.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));
+C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),
+rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));
+C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),
+rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));
+C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),
+rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0.1*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
-model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,family=binomial(link="probit"),data)
-variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
+model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,
+family=binomial(link="probit"),data)
+variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12",
+"C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
 variables.T0=as.data.frame(variables.T0)
-colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")
+colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15",
+"C16","C17","C18","C19","C20","C21","C22","C23","C24")
 variables.T0[1]=0
 variables.T1=variables.T0
 variables.T1[1]=1
@@ -462,15 +515,25 @@ Logit.P.Vals=rep(0,1000)
 for(i in 1:1000){
 Age=runif(100,27,30)
 IQ=runif(100,140,150)
-C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
+C1=c(rep(1,4),rep(0,96));C2=c(rep(0,4),rep(1,4),rep(0,92));C3=c(rep(0,8),rep(1,4),rep(0,88));C4=c(rep(0,12),rep(1,4),rep(0,84));
+C5=c(rep(0,16),rep(1,4),rep(0,80));C6=c(rep(0,20),rep(1,4),rep(0,76));C7=c(rep(0,24),rep(1,4),rep(0,72));C8=c(rep(0,28),rep(1,4),
+rep(0,68));C9=c(rep(0,32),rep(1,4),rep(0,64));C10=c(rep(0,36),rep(1,4),rep(0,60));C11=c(rep(0,40),rep(1,4),rep(0,56));
+C12=c(rep(0,44),rep(1,4),rep(0,52));C13=c(rep(0,48),rep(1,4),rep(0,48));C14=c(rep(0,52),rep(1,4),rep(0,44));C15=c(rep(0,56),
+rep(1,4),rep(0,40));C16=c(rep(0,60),rep(1,4),rep(0,36));C17=c(rep(0,64),rep(1,4),rep(0,32));C18=c(rep(0,68),rep(1,4),rep(0,28));
+C19=c(rep(0,72),rep(1,4),rep(0,24));C20=c(rep(0,76),rep(1,4),rep(0,20));C21=c(rep(0,80),rep(1,4),rep(0,16));C22=c(rep(0,84),
+rep(1,4),rep(0,12));C23=c(rep(0,88),rep(1,4),rep(0,8));C24=c(rep(0,92),rep(1,4),rep(0,4))
 Treat=sample(c(0,1),100,replace=TRUE)
 Prob.Of.Passing=0.005*Age+0.005*IQ+0.1*Treat
 Pass=rbern(100,Prob.Of.Passing)
-data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,Prob.Of.Passing)
-model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,family=binomial(link="logit"),data)
-variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
+data=data.frame(Pass,Treat,Age,IQ,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,
+Prob.Of.Passing)
+model=glm(Pass~Treat+Age+IQ+C1+C2+C3+C4+C5+C6+C7+C8+C9+C10+C11+C12+C13+C14+C15+C16+C17+C18+C19+C20+C21+C22+C23+C24,
+family=binomial(link="logit"),data)
+variables.T0=matrix(colMeans(data[,c("Treat", "Age", "IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12",
+"C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")]),nrow=1)
 variables.T0=as.data.frame(variables.T0)
-colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24")
+colnames(variables.T0)=c("Treat","Age","IQ", "C1", "C2", "C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15",
+"C16","C17","C18","C19","C20","C21","C22","C23","C24")
 variables.T0[1]=0
 variables.T1=variables.T0
 variables.T1[1]=1
@@ -587,4 +650,6 @@ OLS.ests[i]=summary(systemfit(list(Income.Reg=model1,Taxes.Reg=model2),method="O
 Ests=data.frame(Estimate=c(SUR.ests,OLS.ests))
 Ests$Method=c(rep("SUR",1000),rep("OLS",1000))
 
-ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1000, lty=2) + annotate("text", x=980, y=0.0015, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") + labs(title="Comparing OLS and SUR")
+ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1000, lty=2) + 
+annotate("text", x=980, y=0.0015, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") + 
+labs(title="Comparing OLS and SUR")
