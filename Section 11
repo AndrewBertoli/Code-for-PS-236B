@@ -164,7 +164,4 @@ p.val
 Dists=data.frame(Distribution=c(fake.t.stats,fake.t.stats2))
 Dists$Method=c(rep("Rerandomization",length(fake.t.stats)),rep("Normal Experiment",length(fake.t.stats2)))
 
-ggplot(Dists, aes(Distribution, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1, lty=1) + geom_vline(xintercept=0, lty=1) 
-+ geom_vline(xintercept=realtstat, lty=2, col="blue") + geom_vline(xintercept=realtstat2, lty=2, col="pink") + annotate("text", x=0.8, y=0.6, 
-angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Randomization Distribution") 
-+ labs(title="Comparing Rerandomization to a Normal Experiment")
+ggplot(Dists, aes(Distribution, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1, lty=1) + geom_vline(xintercept=0, lty=1) + geom_vline(xintercept=realtstat, lty=2, col="blue") + geom_vline(xintercept=realtstat2, lty=2, col="pink") + annotate("text", x=0.8, y=0.6, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Randomization Distribution") + labs(title="Comparing Rerandomization to a Normal Experiment")
