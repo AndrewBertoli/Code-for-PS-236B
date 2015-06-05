@@ -63,7 +63,9 @@ Des.Raj.ests[i]=DesRajEstimator(Treatment,Control,N=104,M=8,mt=4,nj.t=nj.t,nj.c=
 Ests=data.frame(Estimate=c(diff.in.means.ests,Des.Raj.ests))
 Ests$Method=c(rep("Dif In Means",1000),rep("Des Raj",1000))
 
-ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=ATE, lty=2) + annotate("text", x=ATE, y=0.0015, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") + labs(title="Comparing Difference in Means and Des Raj")
+ggplot(Ests, aes(Estimate, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=ATE, lty=2) + 
+annotate("text", x=ATE, y=0.0015, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Estimated Treatment Effect") 
++ labs(title="Comparing Difference in Means and Des Raj")
 
 
 
@@ -164,4 +166,7 @@ p.val
 Dists=data.frame(Distribution=c(fake.t.stats,fake.t.stats2))
 Dists$Method=c(rep("Rerandomization",length(fake.t.stats)),rep("Normal Experiment",length(fake.t.stats2)))
 
-ggplot(Dists, aes(Distribution, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1, lty=1) + geom_vline(xintercept=0, lty=1) + geom_vline(xintercept=realtstat, lty=2, col="blue") + geom_vline(xintercept=realtstat2, lty=2, col="pink") + annotate("text", x=0.8, y=0.6, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Randomization Distribution") + labs(title="Comparing Rerandomization to a Normal Experiment")
+ggplot(Dists, aes(Distribution, fill = Method)) + geom_density(alpha = 0.2)+geom_vline(xintercept=1, lty=1) 
++ geom_vline(xintercept=0, lty=1) + geom_vline(xintercept=realtstat, lty=2, col="blue") + geom_vline(xintercept=realtstat2, lty=2, col="pink") 
++ annotate("text", x=0.8, y=0.6, angle=90, label="True Effect", size=4.2) + ylab("Density") + xlab("Randomization Distribution") 
++ labs(title="Comparing Rerandomization to a Normal Experiment")
