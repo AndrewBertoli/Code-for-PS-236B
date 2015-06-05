@@ -22,7 +22,8 @@ data=data[-grep("Copyright",data,ignore.case=TRUE)]
 data=data[-grep("Electronic",data,ignore.case=TRUE)]
 data=data[-grep("Shakespeare",data,ignore.case=TRUE)]
 
-# Now we have to extract the 36 plays. They all start with four digit years. They are proceeded by the Sonets, with start with a four digit year, and are followed by "A LOVER'S COMPLAINT", which also starts with a 4 digit year.
+# Now we have to extract the 36 plays. They all start with four digit years. They are proceeded by the Sonets, with start 
+# with a four digit year, and are followed by "A LOVER'S COMPLAINT", which also starts with a 4 digit year.
 
 years.index <- grep("^[[:digit:]]{1,4}$", data, perl = TRUE)
 length(years.index)
@@ -38,7 +39,8 @@ titles=data[1+years.index]
 
 titles
 
-# Now let's find the ends to all the plays. Fortunately, each play ends with the words "THE END" (as does the sonnets and "A LOVER'S COMPLAINT")
+# Now let's find the ends to all the plays. Fortunately, each play ends with the words "THE END" (as does the sonnets and 
+# "A LOVER'S COMPLAINT")
 
 end.index=grep("[.]?THE END", data, perl = TRUE)
 length(end.index)
@@ -54,7 +56,8 @@ for(i in 1:36){
 years.index <- grep("^[[:digit:]]{1,4}$", data, perl = TRUE)
 end.index=grep("[.]?THE END", data, perl = TRUE)
 
-# We will have to go a little out of our way here to get rid of the names in the plays. We must start by putting the plays into a list. 
+# We will have to go a little out of our way here to get rid of the names in the plays. We must start by putting the 
+# plays into a list. 
 
 plays=list()
 for(i in 1:36){
@@ -98,7 +101,8 @@ plays=tm_map(plays, removePunctuation) # Remove all punctuation
 
 plays=tm_map(plays, removeNumbers) # Remove numbers
 
-plays=tm_map(plays, removeWords, c(stopwords("english"),"thee","thy","thou","yet","upon","tis","sir","now","like","make","enter","can","will","shall","say","no","one","come","let")) # Stopwords has about three-hundred commonly used words in English. I added some other terms that it doesn't have after that.
+plays=tm_map(plays, removeWords, c(stopwords("english"),"thee","thy","thou","yet","upon","tis","sir","now","like","make",
+"enter","can","will","shall","say","no","one","come","let")) # Stopwords has about three-hundred commonly used words in English. I added some other terms that it doesn't have after that.
 
 # Now let's stem the words. This will require the package SnowBall
 
@@ -137,7 +141,8 @@ TDM.Common=removeSparseTerms(TDM,0.3) # Get rid of words that do not appear in 3
 TDM.Matrix=as.matrix(TDM.Common)
 colnames(TDM.Matrix)=titles
 
-# So we will use Julius Caesar (16) as the classic example of a tragedy and Merchant of Venice (21) as the classic example of a comedy
+# So we will use Julius Caesar (16) as the classic example of a tragedy and Merchant of Venice (21) as the classic 
+# example of a comedy
 
 wfresults=wordfish(wfm(TDM.Matrix),dir=c(16,21), control=list(tol=1e-4,sigma=3,startparams=NULL)) 
 
@@ -200,9 +205,11 @@ top.topic.documents(out$document_sums,num.documents=10)
 
 # To get the names
 
-cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,1]],comedy[top.topic.documents(out$document_sums,num.documents=10)[,1]])
+cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,1]],comedy[top.topic.documents(out$document_sums,
+num.documents=10)[,1]])
 
-cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,2]],comedy[top.topic.documents(out$document_sums,num.documents=10)[,2]])
+cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,2]],comedy[top.topic.documents(out$document_sums,
+num.documents=10)[,2]])
 
 
 
@@ -239,8 +246,11 @@ out=lda.collapsed.gibbs.sampler(plays.lda$documents,K=3,plays.lda$vocab,num.iter
 
 # To get the names of the top 10 plays in the three categories
 
-cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,1]],comedy[top.topic.documents(out$document_sums,num.documents=10)[,1]])
+cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,1]],comedy[top.topic.documents(out$document_sums,
+num.documents=10)[,1]])
 
-cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,2]],comedy[top.topic.documents(out$document_sums,num.documents=10)[,2]])
+cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,2]],comedy[top.topic.documents(out$document_sums,
+num.documents=10)[,2]])
 
-cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,3]],comedy[top.topic.documents(out$document_sums,num.documents=10)[,3]])
+cbind(titles[top.topic.documents(out$document_sums,num.documents=10)[,3]],comedy[top.topic.documents(out$document_sums,
+num.documents=10)[,3]])
