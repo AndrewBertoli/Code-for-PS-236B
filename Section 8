@@ -95,8 +95,6 @@ meta(plays)=titles
 
 plays=tm_map(plays,stripWhitespace) # Get rid of large white spaces
 
-plays=tm_map(plays, tolower) # Convert all text to lower case
-
 plays=tm_map(plays, removePunctuation) # Remove all punctuation
 
 plays=tm_map(plays, removeNumbers) # Remove numbers
