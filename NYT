@@ -20,7 +20,7 @@ library(ReadMe)
 library(quadprog)
 library(igraph)
 
-nykey="4e796dba6b666c762981086357177f35:18:73474865"
+nykey=""
 
 
 res <- as_search(q="terrorism+war", begin_date = "19950101", end_date = '20101231',fq = "Front Page",key=nykey,page=0)
