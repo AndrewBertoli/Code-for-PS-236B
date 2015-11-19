@@ -166,28 +166,6 @@ wfresults$words[order(wfresults$beta,decreasing=TRUE)[1:10]]
 
 
 
-# Example with Wordscore
-
-# We will use Julius Caesar and Romeo and Juliet as our tragedies and The Merchent of Venice and Much Ado as Our Comedies
-
-ref=c(16,21)
-
-vir=c(1:36)[-c(16,28,21,24)]
-
-r=getdocs(wfm(TDM.Matrix),ref)
-
-ws <- classic.wordscores(r, scores=c(-1,-1,1,1))
-summary(ws)
-
-v=getdocs(wfm(TDM.Matrix),vir)
-
-output=predict(ws, newdata=v)
-
-rownames(output)[order(output$Score)]
-
-# To see how well we did at identifying the comedies
-
-cbind(rownames(output)[order(output$Score)],comedy[-c(16,28,21,24)][order(output$Score)])
 
 # Now we can try lda for scaling
 
